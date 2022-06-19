@@ -1,5 +1,5 @@
 
-public  class TenLinkedList<E>  {
+public class TenLinkedList<E> {
 
 	private static final class Entry<E>{
 		
@@ -63,7 +63,14 @@ public  class TenLinkedList<E>  {
    	  last=e; 
    	  size++;  
    	Entry<E> back=last;
- 	
+ 	if(size>=10) {
+	   for(int i=0;i<10;i++) {
+		  back=back.previous;
+	   }
+	   e.b_next=back;
+	   back.f_next=e;
+ 	}
+ 	  
    }
    
    public E get(int index) {
@@ -96,7 +103,7 @@ public  class TenLinkedList<E>  {
 	   
    }
    
-   public Entry<E> getObject(int index) {
+   public Entry<E> get2(int index) {
 	   
 	   
 	// in this helper method what we did was to search through the linked list, 
@@ -133,7 +140,7 @@ public  class TenLinkedList<E>  {
 	   // and set it to null, moreover what we did was to set the previous node and the node after the one being removed to refer each other
 	   
 	  
-	  Entry<E> m = getObject(index);
+	  Entry<E> m = get2(index);
 	 
 	  if( size <= 1) {
 		  first=last=null;
@@ -141,15 +148,15 @@ public  class TenLinkedList<E>  {
 	  else {
 		  
 		  if(index>0 && index < size){
-			  Entry<E> n = getObject(index+1);
-			  Entry<E> h = getObject(index-1);
+			  Entry<E> n = get2(index+1);
+			  Entry<E> h = get2(index-1);
 			  h.next=n;
 			  n.previous=h;
 		  }
 		  
 		  
 		  else if(index == size) {
-			  Entry<E> h = getObject(index-1);
+			  Entry<E> h = get2(index-1);
 			  last=h;
 			  h.next=null;
 			  
@@ -160,8 +167,8 @@ public  class TenLinkedList<E>  {
 		  }
 	  }
         if(index >10 && index < size) {
-	  Entry<E> f1 = getObject(index);
-	  Entry<E> f2 = getObject(index);
+	  Entry<E> f1 = get2(index);
+	  Entry<E> f2 = get2(index);
 	  f2=f2.next;
 	  for(int i=0;i<9;i++) {
 		  f1=f1.previous;
@@ -184,6 +191,7 @@ public  class TenLinkedList<E>  {
 	   
    }
 
+   
    public void add(int index, E element) {
 	   // in this method what we did was to use a specific index and insert the node at the specifc place,
 	   // and making sure the other nodes also refer to the right node 
@@ -257,31 +265,16 @@ public  class TenLinkedList<E>  {
    
    public String toString(){
 	   // this uses the list, and converts them into a string 
-//	   String str = "[";
-//	   Entry<E> present = first;
-//	   int counter=0;
-//	   
-//	   while(present != null){
-//
-//		   if(counter<size) {
-//		   str += present.element + ",";
-//		   counter++;
-//		   }
-//		   present= present.next;
-//		  
-//	   }
-//	   return str + "]";
-//   }
-	   String result = "[";
-	    if (first != null) {
-	        result += first.toString();
-	    }
-	    return result+"]";
+	   String str = "";
+	   Entry<E> present = first;
+	   while(present != null){
+
+		   str += present.element + " ";
+		   present= present.next;
+	   }
+	   return str + "\n";
    }
-
-
 }
-
    
    
 
